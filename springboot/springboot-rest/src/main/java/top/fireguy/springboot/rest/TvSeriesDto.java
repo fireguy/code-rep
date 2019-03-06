@@ -41,4 +41,8 @@ public class TvSeriesDto {
 		this.originRelease = originRelease;
 	}
 	
+	public String toString() {
+		return this.getClass().getName()+"\t{id:"+id+",name:"+name+",seasonCount:"+seasonCount+",originRelease:"+originRelease;
+	}
+	
 }

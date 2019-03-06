@@ -7,5 +7,11 @@ spring:
     timezone: GMT+8
     serialization:
       write-dates-as-timestamps: false #使用数值timestamp表示日期,优先级高于date-format,低于属性JsonFormat
-      
+
+# 日志级别：TRACE<DEBUG<INFO<ERROR<FATAL
+logging:
+  file: target/app.log
+  level:
+    ROOT: WARN
+    top.fireguy: TRACE      
       
