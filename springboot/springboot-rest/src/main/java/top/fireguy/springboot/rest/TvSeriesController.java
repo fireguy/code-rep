@@ -77,6 +77,11 @@ public class TvSeriesController {
 	//curl -H "Content-Type:application/json" -X POST --data '{"name":"西部世界","seasonCount":1,"originRelease":"2016-10-02"}' http://127.0.0.1:8080/tvSeries/
 	@PostMapping 
 	public TvSeriesDto insert(@RequestBody TvSeriesDto tvSeriesDto) {
+		//Bean Validation 规范JSR303/Hibernate Validator
+		//@Null @NotNull @Min @Max @Size @Past @Future @AssertTrue @AssertFalse @Valid
+		if(tvSeriesDto == null) {
+			throw new RuntimeException("tvSeriesDto can not be null!");
+		}
 		if (log.isTraceEnabled()) {
 			log.trace("insert()"+tvSeriesDto);
 		}
