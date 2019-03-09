@@ -1,4 +1,4 @@
-package top.fireguy.springboot.rest;
+package top.fireguy.springboot.rest.pojo;
 
 public class TvCharacterDto {
 	private String name;

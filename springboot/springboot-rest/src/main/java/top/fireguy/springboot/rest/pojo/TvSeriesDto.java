@@ -1,4 +1,4 @@
-package top.fireguy.springboot.rest;
+package top.fireguy.springboot.rest.pojo;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 基本的POJO,使用Bean Validation注解进行校验
- * 
+ * DTO:Data Transfer Object
  * @author slfu
  *
  */

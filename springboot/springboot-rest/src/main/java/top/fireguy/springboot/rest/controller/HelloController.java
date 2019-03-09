@@ -1,4 +1,4 @@
-package top.fireguy.springboot.rest;
+package top.fireguy.springboot.rest.controller;
 
 import java.util.HashMap;
 import java.util.Map;

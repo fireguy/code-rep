@@ -1,12 +1,22 @@
-# 日期型转JSON
-# 可以在属性上加@JsonFormat(timezon="GMT+8", pattern="yyyy-MM-dd") 或@JsonFormat(shape=JsonFormat.Shape.NUMBER)
+
 
 spring:
+  # 日期型转JSON
+  # 可以在属性上加@JsonFormat(timezon="GMT+8", pattern="yyyy-MM-dd") 或@JsonFormat(shape=JsonFormat.Shape.NUMBER)
   jackson:
     date-format: yyyy-MM-dd #如果使用字符串型表示，用这行设置格式
     timezone: GMT+8
     serialization:
       write-dates-as-timestamps: false #使用数值timestamp表示日期,优先级高于date-format,低于属性JsonFormat
+  # 数据源
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: test
+    password: 12345678
+    driver-class-name: com.mysql.jdbc.Driver
+
+# 下划线转驼峰
+mybatis.configuration.mapUnderscoreToCamelCase: true
 
 # 日志级别：TRACE<DEBUG<INFO<ERROR<FATAL
 logging:

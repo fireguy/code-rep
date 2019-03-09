@@ -1,9 +1,8 @@
-package top.fireguy.springboot.rest;
+package top.fireguy.springboot.rest.controller;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,27 +29,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import top.fireguy.springboot.rest.pojo.TvSeries;
+import top.fireguy.springboot.rest.service.TvSeriesService;
+
 @RestController
 @RequestMapping("/tvSeries")
 public class TvSeriesController {
 	private static final Log log = LogFactory.getLog(TvSeriesController.class);
 	private static final Logger logger = LoggerFactory.getLogger(TvSeriesController.class);
+	
+	@Autowired TvSeriesService tvSeriesService;
 
 	//curl -v http://127.0.0.1:8080/tvSeries/
 	@GetMapping
-	public List<TvSeriesDto> getAll() {
+	public List<TvSeries> getAll() {
 		if (log.isTraceEnabled()) {
 			log.trace("getAll() start");
 		}
-		List<TvSeriesDto> list = new ArrayList<>();
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(2016, Calendar.OCTOBER, 2, 0, 0);
-		if(log.isDebugEnabled()) {
-			log.debug("calendar:" + calendar.getTime());
-		}
-		list.add(new TvSeriesDto(1, "WestWorld", 1, calendar.getTime()));
-		calendar.set(2011, Calendar.SEPTEMBER, 22, 0, 0);
-		list.add(new TvSeriesDto(2, "Person of Interest", 5, calendar.getTime()));
+		List<TvSeries> list = tvSeriesService.getAllTvSeries();
+//		List<TvSeries> list = new ArrayList<>();
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.set(2016, Calendar.OCTOBER, 2, 0, 0);
+//		if(log.isDebugEnabled()) {
+//			log.debug("calendar:" + calendar.getTime());
+//		}
+//		list.add(new TvSeries(1, "WestWorld", 1, calendar.getTime()));
+//		calendar.set(2011, Calendar.SEPTEMBER, 22, 0, 0);
+//		list.add(new TvSeries(2, "Person of Interest", 5, calendar.getTime()));
 		if (logger.isTraceEnabled()) {
 			logger.trace("list size:" + list.size());
 			logger.trace("getAll() ends");
@@ -61,7 +67,7 @@ public class TvSeriesController {
 	//curl -v http://127.0.0.1:8080/tvSeries/102
 	//curl -v http://127.0.0.1:8080/tvSeries/103
 	@GetMapping("/{id}")
-	public TvSeriesDto getById(@PathVariable int id) {
+	public TvSeries getById(@PathVariable int id) {
 		if (log.isTraceEnabled()) {
 			log.trace("getById():" + id);
 		}
@@ -76,7 +82,7 @@ public class TvSeriesController {
 
 	//curl -H "Content-Type:application/json" -X POST --data '{"name":"西部世界","seasonCount":1,"originRelease":"2016-10-02"}' http://127.0.0.1:8080/tvSeries/
 	@PostMapping 
-	public TvSeriesDto insert(@RequestBody TvSeriesDto tvSeriesDto) {
+	public TvSeries insert(@RequestBody TvSeries tvSeriesDto) {
 		//Bean Validation 规范JSR303/Hibernate Validator
 		//@Null @NotNull @Min @Max @Size @Past @Future @AssertTrue @AssertFalse @Valid
 		if(tvSeriesDto == null) {
@@ -92,7 +98,7 @@ public class TvSeriesController {
 	
 	//curl -H "Content-Type:application/json" -X PUT --data '{"name":"西部世界","seasonCount":1,"originRelease":"2016-10-02"}' http://127.0.0.1:8080/tvSeries/101
 	@PutMapping("/{id}") 
-	public TvSeriesDto updateById(@PathVariable int id, @RequestBody TvSeriesDto tvSeriesDto) {
+	public TvSeries updateById(@PathVariable int id, @RequestBody TvSeries tvSeriesDto) {
 		if (log.isTraceEnabled()) {
 			log.trace("updateById():"+id);
 		}
@@ -154,17 +160,17 @@ public class TvSeriesController {
 		return IOUtils.toByteArray(is);
 	}
 
-	private TvSeriesDto creat101() {
+	private TvSeries creat101() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2016, Calendar.OCTOBER, 2, 0, 0);
 		log.debug("calendar:" + calendar.getTime());
-		return new TvSeriesDto(1, "WestWorld", 1, calendar.getTime());
+		return new TvSeries(1, "WestWorld", 1, calendar.getTime());
 	}
 
-	private TvSeriesDto creat102() {
+	private TvSeries creat102() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2011, Calendar.SEPTEMBER, 22, 0, 0);
-		return new TvSeriesDto(2, "Person of Interest", 5, calendar.getTime());
+		return new TvSeries(2, "Person of Interest", 5, calendar.getTime());
 	}
 
 }
